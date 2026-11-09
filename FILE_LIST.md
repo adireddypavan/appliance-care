@@ -39,8 +39,8 @@ kadapa-appliance-care/
 │       ├── 📄 Services.js                # Services showcase
 │       ├── 📄 Services.css               # Services styles
 │       │
-│       ├── 📄 ServiceRequestModal.js     # WhatsApp booking form
-│       ├── 📄 ServiceRequestModal.css    # Modal styles
+│       ├── 📄 BookingModal.js            # WhatsApp booking form
+│       ├── 📄 BookingModal.css           # Modal styles
 │       │
 │       ├── 📄 About.js                   # About section
 │       ├── 📄 About.css                  # About styles
@@ -52,6 +52,11 @@ kadapa-appliance-care/
 │       └── 📄 Footer.css                 # Footer styles
 │
 ├── 📁 node_modules/                      # Dependencies (auto-generated)
+│
+├── 📁 server/                            # Booking email and PDF service
+│   ├── 📄 server.js
+│   ├── 📄 package.json
+│   └── 📄 .env.example
 │
 └── 📁 build/                             # Production build (after npm run build)
     └── (optimized files for deployment)
@@ -145,8 +150,8 @@ kadapa-appliance-care/
   - WhatsApp integration
   - Custom service CTA
 
-#### 4️⃣ ServiceRequestModal Component
-- **Files**: `ServiceRequestModal.js`, `ServiceRequestModal.css`
+#### 4️⃣ BookingModal Component
+- **Files**: `BookingModal.js`, `BookingModal.css`
 - **Features**:
   - Service request form
   - Order ID generation
@@ -225,11 +230,10 @@ kadapa-appliance-care/
 #### 📄 package.json
 - **Purpose**: Project configuration and dependencies
 - **Key Dependencies**:
-  - react: ^18.x
-  - react-dom: ^18.x
-  - react-scripts: 5.x
-  - react-icons: ^5.x
-  - react-router-dom: ^6.x
+  - react / react-dom: ^19.3.1
+  - react-scripts: 5.0.1
+  - react-icons: ^5.7.0
+  - Testing Library packages for tests
 
 #### 📄 package-lock.json
 - **Purpose**: Locked dependency versions
@@ -258,7 +262,7 @@ kadapa-appliance-care/
 3. **src/components/Services.js** (Line 84)
    - Update WhatsApp number
 
-4. **src/components/ServiceRequestModal.js** (Line 14)
+4. **src/components/BookingModal.js** (Line 14)
    - Update WhatsApp number
 
 5. **src/components/ContactSection.js** (Lines 6-8)
