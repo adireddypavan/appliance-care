@@ -9,7 +9,7 @@ const EMPTY = {
   name: '', mobile: '', email: '',
   address: '', city: 'Kadapa', pincode: '', landmark: '',
   issueDescription: '', preferredDate: '', preferredTime: '',
-  location: '',
+  location: '', pcbAppliance: '', serviceOptions: [],
 };
 
 const SLOTS = ['Morning\n8-12', 'Afternoon\n12-4', 'Evening\n4-8', 'Flexible'];
@@ -37,6 +37,8 @@ function buildWhatsappMsg(b, mapLink) {
     `SERVICE DETAILS`,
     `--------------------------------------------`,
     `Appliance: ${b.serviceType}`,
+    b.serviceOptions.length ? `Service needed: ${b.serviceOptions.join(', ')}` : null,
+    b.pcbAppliance ? `PCB board for: ${b.pcbAppliance}` : null,
     b.preferredDate ? `Date: ${b.preferredDate}` : null,
     b.preferredTime ? `Time: ${b.preferredTime}` : null,
     ``,
@@ -99,6 +101,16 @@ const BookingModal = ({ service, services, startAtDetails = false, onClose }) =>
   const handleServiceChange = e => {
     const nextService = services.find(item => String(item.id) === e.target.value);
     setSelectedService(nextService || null);
+    setForm(p => ({ ...p, pcbAppliance: '', serviceOptions: [] }));
+  };
+  const toggleServiceOption = option => {
+    setForm(p => ({
+      ...p,
+      serviceOptions: p.serviceOptions.includes(option)
+        ? p.serviceOptions.filter(item => item !== option)
+        : [...p.serviceOptions, option]
+    }));
+    setErrors(p => ({ ...p, serviceOptions: '' }));
   };
   const handleBookNow = () => {
     if (!selectedService) return;
@@ -115,6 +127,12 @@ const BookingModal = ({ service, services, startAtDetails = false, onClose }) =>
     if (!form.name.trim())                  e.name    = 'Name is required';
     if (!/^[0-9]{10}$/.test(form.mobile))  e.mobile  = 'Enter a valid 10-digit number';
     if (!form.address.trim())              e.address = 'Address is required';
+    if (selectedService && selectedService.bookingOptions && !form.serviceOptions.length) {
+      e.serviceOptions = 'Select at least one service option';
+    }
+    if (selectedService && selectedService.pcbAppliances && !form.pcbAppliance) {
+      e.pcbAppliance = 'Choose which appliance PCB needs repair';
+    }
     if (!form.issueDescription.trim())     e.issue   = 'Please describe the issue';
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -148,9 +166,9 @@ const BookingModal = ({ service, services, startAtDetails = false, onClose }) =>
             {selectedService ? selectedService.icon : <FaTools />}
           </div>
           <div className="bmodal-service-info">
-            <h2>{step === 'service' ? 'Choose a service' : 'Add your details'}</h2>
+            <h2>{step === 'service' ? 'Book a Service' : 'Add your details'}</h2>
             <p>{step === 'service'
-              ? 'Select the appliance or service you need help with.'
+              ? 'Book appliance PCB repair for AC, refrigerator, washing machine, microwave oven or chimney.'
               : `${selectedService.name} — your request will be sent through WhatsApp.`}</p>
           </div>
           <button className="bmodal-close" onClick={onClose} aria-label="Close"><FaTimes /></button>
@@ -161,7 +179,7 @@ const BookingModal = ({ service, services, startAtDetails = false, onClose }) =>
           {step === 'service' ? (
             <div className="bm-section bm-service-picker">
               <div className="bm-field">
-                <label htmlFor="booking-service">Type of service <span className="req">*</span></label>
+                <label htmlFor="booking-service">Choose a service <span className="req">*</span></label>
                 <select
                   id="booking-service"
                   value={selectedService ? String(selectedService.id) : ''}
@@ -196,6 +214,48 @@ const BookingModal = ({ service, services, startAtDetails = false, onClose }) =>
                 </button>
                 <span>Service: <strong>{selectedService.name}</strong></span>
               </div>
+
+          {selectedService.bookingOptions && (
+            <div className="bm-section bm-booking-options">
+              <div className="bm-section-title">
+                <div className="bm-section-icon" style={{ background:'#fff0e6', color:'#c94b18' }}><FaTools /></div>
+                What service do you need?
+              </div>
+              <p className="bm-options-hint">Choose all that apply. This helps us understand what you need.</p>
+              <div className="bm-option-list">
+                {selectedService.bookingOptions.map(option => (
+                  <button
+                    key={option}
+                    type="button"
+                    className={`bm-option ${form.serviceOptions.includes(option) ? 'selected' : ''}`}
+                    aria-pressed={form.serviceOptions.includes(option)}
+                    onClick={() => toggleServiceOption(option)}
+                  >
+                    <span className="bm-option-check" aria-hidden="true">{form.serviceOptions.includes(option) ? '✓' : ''}</span>
+                    {option}
+                  </button>
+                ))}
+              </div>
+              {errors.serviceOptions && <span className="bm-error" role="alert">{errors.serviceOptions}</span>}
+              {selectedService.pcbAppliances && (
+                <div className="bm-field bm-pcb-appliance">
+                  <label htmlFor="pcb-appliance">Which appliance needs PCB board repair? <span className="req">*</span></label>
+                  <select
+                    id="pcb-appliance"
+                    name="pcbAppliance"
+                    value={form.pcbAppliance}
+                    onChange={chg}
+                  >
+                    <option value="">Select an appliance</option>
+                    {selectedService.pcbAppliances.map(appliance => (
+                      <option key={appliance} value={appliance}>{appliance}</option>
+                    ))}
+                  </select>
+                  {errors.pcbAppliance && <span className="bm-error">{errors.pcbAppliance}</span>}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ── Section 1: Personal ── */}
           <div className="bm-section">

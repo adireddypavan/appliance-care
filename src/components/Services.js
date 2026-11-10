@@ -4,20 +4,20 @@ import BookingModal from './BookingModal';
 import {
   FaSnowflake, FaFan, FaUtensils, FaTshirt,
   FaTint, FaFire, FaTruckMoving, FaWind,
-  FaLaptop, FaTools, FaWhatsapp, FaArrowRight, FaPhone
+  FaTools, FaWhatsapp, FaArrowRight, FaPhone, FaMicrochip
 } from 'react-icons/fa';
 
 export const SERVICES = [
-  { id:1,  name:'AC Service & Repair',     icon:<FaSnowflake/>, color:'#24527a', bg:'#e5f0fa', desc:'AC service in Kadapa, including repair, installation, deep cleaning and gas refilling.', features:['Gas Refilling','Deep Cleaning','Installation'] },
-  { id:2,  name:'Refrigerator Repair',     icon:<FaFan/>,       color:'#4d86b5', bg:'#eaf3fa', desc:'Fridge and refrigerator repair for cooling issues, gas leaks and compressor problems.', features:['Cooling Issues','Gas Leak Fix','Compressor Repair'] },
-  { id:3,  name:'Microwave Repair',        icon:<FaUtensils/>,  color:'#24527a', bg:'#e5f0fa', desc:'Microwave oven repair and maintenance for heating and control-panel issues.', features:['Heating Issues','Control Panel','Magnetron Repair'] },
-  { id:4,  name:'Washing Machine',         icon:<FaTshirt/>,    color:'#376f9d', bg:'#e8f1f8', desc:'Washing machine repair, maintenance and installation for common machine types.', features:['Drum Issues','Water Drainage','Motor Repair'] },
-  { id:5,  name:'Water Purifier',          icon:<FaTint/>,      color:'#24527a', bg:'#eaf3fa', desc:'RO and water purifier service, filter replacement and installation.', features:['Filter Change','Installation','AMC Available'] },
-  { id:6,  name:'Geyser Repair',           icon:<FaFire/>,      color:'#4d86b5', bg:'#e5f0fa', desc:'Electric and gas geyser repair, maintenance and installation.', features:['Element Change','Thermostat Fix','Installation'] },
-  { id:7,  name:'Chimney Service',        icon:<FaWind/>,      color:'#24527a', bg:'#e8f1f8', desc:'Kitchen chimney cleaning, repair and installation services.', features:['Deep Cleaning','Motor Repair','Installation'] },
-  { id:8,  name:'Movers & Packers',       icon:<FaTruckMoving/>,color:'#376f9d',bg:'#e5f0fa', desc:'Home and office relocation, packing, transportation and unpacking.', features:['Packing','Transportation','Unpacking'] },
-  { id:9,  name:'Furniture Assembly',      icon:<FaTools/>,     color:'#24527a', bg:'#e8f1f8', desc:'Furniture assembly, repair and maintenance for home and office.', features:['Assembly','Repair','Maintenance'] },
-  { id:10, name:'Hardware & PCs',          icon:<FaLaptop/>,    color:'#4d86b5', bg:'#eaf3fa', desc:'Computer hardware repair, software installation and setup support.', features:['Hardware Repair','Software Setup','Data Recovery'] },
+  { id:1,  name:'AC Service & Repair',     icon:<FaSnowflake/>, color:'#c94b18', bg:'#fff0e6', desc:'AC service in Kadapa, including repair, installation, deep cleaning and gas refilling.', features:['Gas Refilling','Deep Cleaning','Installation'], bookingOptions:['Repair','Installation','Deep cleaning','Gas refilling','Maintenance'] },
+  { id:2,  name:'Refrigerator Repair',     icon:<FaFan/>,       color:'#246b68', bg:'#e4f2ee', desc:'Fridge and refrigerator repair for cooling issues, gas leaks and compressor problems.', features:['Cooling Issues','Gas Leak Fix','Compressor Repair'], bookingOptions:['Repair','Installation','Cooling issue','Gas leak','Compressor repair','Maintenance'] },
+  { id:4,  name:'Washing Machine',         icon:<FaTshirt/>,    color:'#246b68', bg:'#e4f2ee', desc:'Washing machine repair, maintenance and installation for common machine types.', features:['Drum Issues','Water Drainage','Motor Repair'], bookingOptions:['Repair','Installation','Drum issue','Drainage issue','Motor repair','Maintenance'] },
+  { id:3,  name:'Microwave Oven Repair',   icon:<FaUtensils/>,  color:'#c94b18', bg:'#fff0e6', desc:'Microwave oven repair and maintenance for heating and control-panel issues.', features:['Heating Issues','Control Panel','Magnetron Repair'], bookingOptions:['Repair','Installation','Heating issue','Control panel repair','Maintenance'] },
+  { id:7,  name:'Chimney Service',         icon:<FaWind/>,      color:'#246b68', bg:'#e4f2ee', desc:'Kitchen chimney cleaning, repair and installation services.', features:['Deep Cleaning','Motor Repair','Installation'], bookingOptions:['Repair','Installation','Deep cleaning','Motor repair','Maintenance'] },
+  { id:11, name:'PCB Board Repair',        icon:<FaMicrochip/>, color:'#c94b18', bg:'#fff0e6', desc:'PCB board diagnosis and repair for ACs, refrigerators, washing machines, microwave ovens and chimneys. Select the appliance when booking.', features:['AC','Refrigerator','Washing Machine','Microwave Oven','Chimney'], pcbAppliances:['AC','Refrigerator','Washing Machine','Microwave Oven','Chimney'], bookingOptions:['PCB diagnosis and repair'] },
+  { id:5,  name:'Water Purifier',          icon:<FaTint/>,      color:'#246b68', bg:'#e4f2ee', desc:'RO and water purifier service, filter replacement and installation.', features:['Filter Change','Installation','AMC Available'], bookingOptions:['Repair','Installation','Filter replacement','RO service','AMC / maintenance'] },
+  { id:6,  name:'Geyser Repair',           icon:<FaFire/>,      color:'#c94b18', bg:'#fff0e6', desc:'Electric and gas geyser repair, maintenance and installation.', features:['Element Change','Thermostat Fix','Installation'], bookingOptions:['Repair','Installation','Heating element replacement','Thermostat repair','Maintenance'] },
+  { id:8,  name:'Movers & Packers',       icon:<FaTruckMoving/>,color:'#246b68',bg:'#e4f2ee', desc:'Home and office relocation, packing, transportation and unpacking.', features:['Packing','Transportation','Unpacking'], bookingOptions:['Packing','Transportation','Unpacking','Full relocation'] },
+  { id:9,  name:'Furniture Assembly',      icon:<FaTools/>,     color:'#c94b18', bg:'#fff0e6', desc:'Furniture assembly, repair and maintenance for home and office.', features:['Assembly','Repair','Maintenance'], bookingOptions:['Assembly','Repair','Maintenance'] },
 ];
 
 /* ── Service card ── */
@@ -39,7 +39,7 @@ const ServiceCard = ({ service, index, onBook }) => {
       style={{ transitionDelay: `${(index % 4) * 70}ms` }}
       onClick={() => onBook(service, true)}
     >
-      <div className="scard-num">0{index + 1}</div>
+      <div className="scard-num">{String(index + 1).padStart(2, '0')}</div>
       <div className="scard-top">
         <div className="scard-icon" style={{ background: service.bg, color: service.color }}>
           {service.icon}
@@ -83,9 +83,10 @@ const Services = () => {
               <h2 className="section-heading">Appliance Repair &amp; Home Services in <em>Kadapa</em></h2>
               <p className="section-sub">
                 Explore AC service in Kadapa, fridge and refrigerator repair, washing machine
-                service, microwave repair, RO water purifier maintenance, geyser repair,
-                chimney cleaning, computer support and other listed services. Contact us
-                to confirm appointment and home-visit availability for your address.
+                service, microwave oven repair, chimney cleaning and appliance PCB board repair,
+                along with RO water purifier maintenance, geyser repair, computer support and
+                other listed services. Select a service to book and contact us to confirm
+                appointment and home-visit availability for your address.
               </p>
             </div>
             <a
@@ -106,7 +107,7 @@ const Services = () => {
           <div className="svc-cta reveal">
             <div className="svc-cta-text">
               <h3>Can't find your appliance?</h3>
-              <p>Tell us what needs fixing. We'll confirm whether we can help before you book.</p>
+              <p>Choose AC, refrigerator, washing machine, microwave oven, chimney or PCB board repair, or tell us what else needs fixing.</p>
             </div>
             <div className="svc-cta-actions">
               <a href="tel:+916303715808" className="btn btn-white">

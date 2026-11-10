@@ -57,7 +57,7 @@ const Header = () => {
 
             {/* Logo */}
             <button type="button" className="logo" onClick={() => scrollTo('home')} aria-label="Home">
-              <img src="/logo.svg" alt="Kadapa Appliance Care" className="logo-img" />
+              <img src="/logo-mark.png" alt="Kadapa Appliance Care" className="logo-img" />
               <div className="logo-text">
                 <span className="l-name">Kadapa Appliance Care</span>
                 <span className="l-tag">ESTD 2026 · Kadapa</span>

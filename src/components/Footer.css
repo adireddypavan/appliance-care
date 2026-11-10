@@ -29,7 +29,7 @@
   height: 58px;
   width: 58px;
   object-fit: contain;
-  border-radius: 13px;
+  flex-shrink: 0;
 }
 .footer-brand-lockup span {
   display: flex;

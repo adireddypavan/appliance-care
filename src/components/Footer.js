@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="footer-brand-lockup">
-              <img src="/logo.svg" alt="" className="footer-logo-img" />
+              <img src="/logo-mark.png" alt="" className="footer-logo-img" />
               <span>
                 <strong>Kadapa Appliance Care</strong>
                 <small>Home Appliance Services</small>
